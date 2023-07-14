@@ -35,7 +35,12 @@ Note: as the `Makefile` is configured to define dependencies between targets, it
 
 ## Useful links
 
-- [Reproducibility with make](https://the-turing-way.netlify.app/reproducible-research/make.html)
+- Make
+    - Introduction to [reproducibility with make](https://the-turing-way.netlify.app/reproducible-research/make.html)
+    - Manual:
+        - File name functions: https://www.gnu.org/software/make/manual/html_node/File-Name-Functions.html
+        - Variables: https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
+        - Special targets (eg .PRECIOUS): https://www.gnu.org/software/make/manual/html_node/Special-Targets.html
 - Discussions about building multi-modal datasets:
     -   Specimens and illustrations - [discussion #1](https://github.com/orgs/KewBridge/discussions/1)
     -   Specimens and textual descriptions (TBC)
