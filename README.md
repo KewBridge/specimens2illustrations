@@ -22,9 +22,11 @@ This is the simplest way to run the software and to get an understanding of what
 
 ### Locally (on your own machine)
 
-**Pre-requisities**
-You will need `python` installed on your local machine, and the dpeendency management tool `make`. See the useful links section below for resources about using and understanding the tool make. 
+#### Pre-requisities
+You will need a git client in order to get the code from github. 
+To run the software you'll need `python` installed on your local machine, and the dependency management tool `make`. See the useful links section below for resources about using and understanding the tool make. 
 
+#### How to run
 1. Open a command line shell
 2. Clone the github repository into a directory on your local machine
 3. `cd` into the new directory
