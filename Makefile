@@ -11,20 +11,20 @@ xml_targets = $(addsuffix .xml, $(addprefix ${download_prefix}, ${dois}))
 txt_targets = $(addsuffix .txt, $(addprefix ${data_prefix}, ${dois}))
 
 # Each .xml target depends only on the script used to download the XML data using the DOI (doi2xml.py). 
-downloads/%.xml: doi2xml.py
-	# Create the directory in which we will store output, if necessary. Here we use the dir function in make to extract the directory name from the filename of the target ($@)
+# The mkdir cmd creates the directory in which we will store output, if necessary. Here we use the dir function in make to extract the directory name from the filename of the target ($@)
+# The python call accepts the dependencies of this target ($^), the "stem" - that which makes the % part of the target ie the DOI ($*) and the target itself ($@)
+downloads/%.xml: doi2xml.py	
 	mkdir -p $(dir $@)
-	# Call python passing in the dependencies of this target ($^), the "stem" - that which makes the % part of the target ie the DOI ($*) and the target itself ($@)
 	python $^ $* $@
 
 # This is our "ultimate" target, the processed text files
 all: ${txt_targets}
 
 # Each .txt target depends on the script used to process the XML data (xml2illustrationdata.py) and the corresponding XML format data download
+# The mkdir cmd creates the directory in which we will store output, if necessary. Here we use the dir function in make to extract the directory name from the filename of the target ($@)
+# The python call accepts the dependencies of this target ($^) and the target itself ($@)
 data/%.txt: xml2illustrationdata.py downloads/%.xml
-	# Create the directory in which we will store output, if necessary. Here we use the dir function in make to extract the directory name from the filename of the target ($@)
 	mkdir -p $(dir $@)
-	# Call python passing in the dependencies of this target ($^) and the target itself ($@)
 	python $^ $@
 
 clean:
@@ -35,4 +35,3 @@ sterilise:
 
 # This tells make not to delete any intermediate files (see: https://www.gnu.org/software/make/manual/html_node/Special-Targets.html)
 .PRECIOUS: ${xml_targets}
-
