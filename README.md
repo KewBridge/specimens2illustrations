@@ -28,10 +28,12 @@ To run the software you'll need `python` installed on your local machine, and th
 
 #### How to run
 1. Open a command line shell
-2. Clone the github repository into a directory on your local machine
-3. `cd` into the new directory
-3. Install python dependencies: `pip install -r requirements.txt`
-4. Use make to generate the target (the processed text files): `make all`
+1. Clone the github repository into a directory on your local machine: `git clone git@github.com:KewBridge/specimens2illustrations.git`
+1. Change into the new directory: `cd specimens2illustrations`
+1. Create a virtual environment: `python -m venv env`
+1. Activate the virtual environment: `source env/Scripts/activate`
+1. Install python dependencies: `pip install -r requirements.txt`
+1. Use make to generate the target (the processed text files): `make all`
 
 Note: as the `Makefile` is configured to define dependencies between targets, it will first execute commands to download the XML format data using the list of DOIs supplied. (DOI == Digital Object Identifier, a resolvable persistent identifier for a bibliographic work). The DOIs are defined as a variable in the first line of the Makefile. Then the XML format data is processed using `xml2illustrationdata.py` to generate the processed text file. See comments within the makefile for more details.
 
