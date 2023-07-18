@@ -7,7 +7,7 @@ def xml2illustrations(input_file, output_file):
         xml_data = f_in.read()
     
     # Parse the XML data using BeautifulSoup
-    soup = BeautifulSoup(xml_data, 'html.parser')
+    soup = BeautifulSoup(xml_data, features='xml')
 
     # Find all elements with tag 'tp:treatment-sec' and attribute 'sec-type="Description"'
     elements = soup.find_all('tp:treatment-sec', attrs={'sec-type': 'Description'})
