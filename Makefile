@@ -8,7 +8,7 @@ data_prefix = data/
 # Loop over each DOI in the list, add a prefix which is the path of the download directory, and a suffix which is the file extension ".xml"
 xml_targets = $(addsuffix .xml, $(addprefix ${download_prefix}, ${dois}))
 # Similar to above, loop over each DOI in the list, add a prefix which is the path of the data directory, and a suffix which is the file extension ".txt"
-txt_targets = $(addsuffix .txt, $(addprefix ${data_prefix}, ${dois}))
+txt_targets = $(addsuffix /species-descriptions.txt, $(addprefix ${data_prefix}, ${dois}))
 
 # Each .xml target depends only on the script used to download the XML data using the DOI (doi2xml.py). 
 # The mkdir cmd creates the directory in which we will store output, if necessary. Here we use the dir function in make to extract the directory name from the filename of the target ($@)
@@ -19,13 +19,18 @@ downloads/%.xml: doi2xml.py
 
 # This is our "ultimate" target, the processed text files
 all: ${txt_targets}
+img:  ${img_targets}
+
+echo:
+	echo ${txt_targets}
+	echo ${img_targets}
 
 # Each .txt target depends on the script used to process the XML data (xml2illustrationdata.py) and the corresponding XML format data download
 # The mkdir cmd creates the directory in which we will store output, if necessary. Here we use the dir function in make to extract the directory name from the filename of the target ($@)
 # The python call accepts the dependencies of this target ($^) and the target itself ($@)
-data/%.txt: xml2illustrationdata.py downloads/%.xml
+data/%/species-descriptions.txt: xml2illustrationdata.py downloads/%.xml
 	mkdir -p $(dir $@)
-	python $^ $@
+	python $^ --download_images --image_dir $(dir $@) $@
 
 clean:
 	rm -rf data
