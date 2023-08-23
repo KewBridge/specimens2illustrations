@@ -38,6 +38,8 @@ def xml2illustrations(input_file, output_file, image_dir, download_images = True
                     if fig_url is not None:
                         downloadImage(fig_url, save_path)
 
+# TODO: Use the requests library to download the image specified in fig_url and store the downloaded file in image_dir
+
 def downloadImage(url, destinationDir):  
     r = requests.get(url)
     #print("Url:",url)
@@ -80,4 +82,5 @@ if __name__ == "__main__":
     # Parse the command-line arguments
     args = parser.parse_args()
 
-    xml2illustrations(args.input_file, args.output_file, args.image_dir, args.download_images)
+    # Call the main function with the provided arguments
+    xml2illustrations(args.input_file, args.output_file, args.image_dir,  args.download_images)
