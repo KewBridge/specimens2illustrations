@@ -5,18 +5,12 @@ import argparse
 import datetime
 import random
 
-def read_xml(file_path):
-    with open(file_path, 'r') as file:
-        xml_paths = [line.strip() for line in file.readlines()]
-    return xml_paths 
-
 def xml2illustrations(input_file, output_file, image_dir, download_images = True):
-    xml_paths = read_xml(input_file)
-    for xml_path in xml_paths:
-        with open(xml_path, 'r', encoding = 'utf-8') as file:
-            xml_content = file.read()
+    xml_data = None
+    with open(input_file, 'r', encoding = 'utf-8') as f_in:
+            xml_data = f_in.read()
             
-            soup = BeautifulSoup(xml_content, 'xml')
+            soup = BeautifulSoup(xml_data, 'xml')
             
             elements = soup.find_all('tp:treatment-sec', attrs={'sec-type': 'Description'})
             if len(elements) == 0:
@@ -29,15 +23,15 @@ def xml2illustrations(input_file, output_file, image_dir, download_images = True
                     output_data = [elem2TaxonName(element), elem2Description(element), fig_label, caption, fig_url]
                     output_data = ['' if i is None else i for i in output_data]
                     f_out.write('\t'.join(output_data) + '\n')
-                    #if download_images == 'True':
-                    os.makedirs(image_dir, exist_ok = True)
-                    random_component = "{:04x}".format(random.randint(0, 900000))
-                    timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-                    image_file = f"image_{timestamp}_{random_component}.jpg"
-                    save_path = os.path.join(image_dir, image_file)
-                    if fig_url is not None:
-                        downloadImage(fig_url, save_path)
-
+                    if download_images:
+                        os.makedirs(image_dir, exist_ok = True)
+                        random_component = "{:04x}".format(random.randint(0, 900000))
+                        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+                        image_file = f"image_{timestamp}_{random_component}.jpg"
+                        save_path = os.path.join(image_dir, image_file)
+                        if fig_url is not None:
+                            downloadImage(fig_url, save_path)
+            
 # TODO: Use the requests library to download the image specified in fig_url and store the downloaded file in image_dir
 
 def downloadImage(url, destinationDir):  
