@@ -76,7 +76,7 @@ if __name__ == "__main__":
     # Add the command-line arguments
     parser.add_argument("input_file", help="Path to the input XML format article file")
     parser.add_argument("output_file", help="Path to the output file")
-    parser.add_argument("image_dir", help="Path to the directory used to store downloaded images")
+    parser.add_argument("--image_dir", help="Path to the directory used to store downloaded images")
     parser.add_argument("--download_images", dest='download_images', default=False, action='store_true')
     
     # Parse the command-line arguments
