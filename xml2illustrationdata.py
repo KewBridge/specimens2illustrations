@@ -17,7 +17,7 @@ def xml2illustrations(input_file, output_file, image_dir, download_images = True
                 elements = soup.find_all('tp:treatment-sec', attrs={'sec-type': 'description'})
             #print(len(elements))
             
-            with open('output_file.txt', 'w', encoding='utf8') as f_out:
+            with open(output_file, 'w', encoding='utf8') as f_out:
                 for element in elements:
                     (fig_label, caption, fig_url) = elem2Figure(element)
                     output_data = [elem2TaxonName(element), elem2Description(element), fig_label, caption, fig_url]
