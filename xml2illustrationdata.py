@@ -25,11 +25,13 @@ def xml2illustrations(input_file, output_file, image_dir, download_images = True
                     f_out.write('\t'.join(output_data) + '\n')
                     if download_images:
                         os.makedirs(image_dir, exist_ok = True)
-                        random_component = "{:04x}".format(random.randint(0, 900000))
-                        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-                        image_file = f"image_{timestamp}_{random_component}.jpg"
-                        save_path = os.path.join(image_dir, image_file)
+                        # random_component = "{:04x}".format(random.randint(0, 900000))
+                        # timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+                        
                         if fig_url is not None:
+                            image_number = url_fig.split('/')[-1]
+                            image_file = f"image_{image_number}.jpg"
+                            save_path = os.path.join(image_dir, image_file)
                             downloadImage(fig_url, save_path)
             
 # TODO: Use the requests library to download the image specified in fig_url and store the downloaded file in image_dir
