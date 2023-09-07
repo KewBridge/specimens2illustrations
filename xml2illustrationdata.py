@@ -29,7 +29,7 @@ def xml2illustrations(input_file, output_file, image_dir, download_images = True
                         # timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
                         
                         if fig_url is not None:
-                            image_number = url_fig.split('/')[-1]
+                            image_number = fig_url.split('/')[-1]
                             image_file = f"image_{image_number}.jpg"
                             save_path = os.path.join(image_dir, image_file)
                             downloadImage(fig_url, save_path)
