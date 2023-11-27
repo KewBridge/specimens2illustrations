@@ -28,8 +28,8 @@ jobs:
       if: ${{ github.event_name == 'workflow_dispatch'}}
       uses: actions/upload-artifact@v3
       with:
-        name: build/data.zip
-        path: data.zip
+        name: data.zip
+        path: build/data.zip
 
     - name: Attach built artifacts to release
       if: ${{ github.event_name == 'release'}}
