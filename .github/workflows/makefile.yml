@@ -2,6 +2,9 @@ name: Makefile CI
 
 on:
   workflow_dispatch:
+  push:
+      tags:        
+        - v*.**  
       
 jobs:
   build:
@@ -18,8 +21,20 @@ jobs:
     - name: Download article data & reformat to delimited datafiles
       run: make all
 
+    - name: Zip data dir to build/data.zip
+      run: make zip
+      
     - name: Attach built artifact to run 
+      if: ${{ github.event_name == 'workflow_dispatch'}}
       uses: actions/upload-artifact@v3
       with:
-        name: data
-        path: data
+        name: build/data.zip
+        path: data.zip
+
+    - name: Attach built artifacts to release
+      if: ${{ github.event_name == 'release'}}
+      uses: softprops/action-gh-release@v1
+      with:
+        files: build/data.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}        
