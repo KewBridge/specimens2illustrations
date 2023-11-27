@@ -32,6 +32,12 @@ data/%/species-descriptions.txt: xml2illustrationdata.py downloads/%.xml
 	mkdir -p $(dir $@)
 	python $^ --download_images --image_dir $(dir $@) $@
 
+zip: build/data.zip
+
+build/data.zip: ${txt_targets}
+	mkdir -p build
+	zip build/data.zip data/*
+
 clean:
 	rm -rf data
 
