@@ -36,7 +36,7 @@ zip: build/data.zip
 
 build/data.zip: ${txt_targets}
 	mkdir -p build
-	zip build/data.zip data/*
+	zip build/data.zip data/* -r
 
 clean:
 	rm -rf data
