@@ -23,3 +23,6 @@ jobs:
       with:
         name: data
         path: data
+
+    - name: echo
+      run: echo ${{ github.event_name}} ${{github.event.action}}
