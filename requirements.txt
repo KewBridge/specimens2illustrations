@@ -1,3 +1,8 @@
 beautifulsoup4
+cv2
+imageio
+keras_ocr
 lxml
+numpy
+pandas
 requests
