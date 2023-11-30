@@ -1,7 +1,7 @@
 beautifulsoup4
-cv2
+opencv-python
 imageio
-keras_ocr
+keras-ocr
 lxml
 numpy
 pandas
