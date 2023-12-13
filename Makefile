@@ -27,7 +27,7 @@ echo:
 
 # Each .txt target depends on the script used to process the XML data (xml2illustrationdata.py) and the corresponding XML format data download
 # The mkdir cmd creates the directory in which we will store output, if necessary. Here we use the dir function in make to extract the directory name from the filename of the target ($@)
-# The python call accepts the dependencies of this target ($^) and the target itself ($@)
+# The python call accepts the dependencies of this target ($^) as the input and the target itself ($@) as the output
 data/%/species-descriptions.txt: xml2illustrationdata.py downloads/%.xml
 	mkdir -p $(dir $@)
 	python $^ --download_images --image_dir $(dir $@) $@
