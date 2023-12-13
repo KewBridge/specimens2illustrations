@@ -9,29 +9,21 @@ The data included in the monograph can be used to build multi-modal datasets, su
 
 ## Process
 ```mermaid
-graph TB
-
-    subgraph "Article download&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-        subgraph subgraph_padding_1 [ ]
-        style subgraph_padding_1 stroke-dasharray: 0 1
-        doi2xml["<b>make xml</b> For each DOI, <br/>get XML format data<br/><b>Input:</b> doi:10.3897/phytokeys.22.4041 <br/><b>Output:</b> downloads/10.3897/phytokeys.22.4041.xml"]
+graph LR
+    subgraph s [" "]
+        subgraph s0 ["Article download"]
+            doi2xml["<b>make xml</b> For each DOI, <br/>get XML format data<br/><b>Input:</b> doi:10.3897/phytokeys.22.4041 <br/><b>Output:</b> downloads/10.3897/phytokeys.22.4041.xml"]
         end
-    end
 
-    subgraph "Initial text processing and image download&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-        subgraph subgraph_padding_2 [ ]
-        style subgraph_padding_2 stroke-dasharray: 0 1
-        xmlproc["<b>make txt</b> For each XML file, <br/>extract relevant data and <br/>write to text delimited file<br/><b>Input:</b> downloads/10.3897/phytokeys.22.4041.xml<br/><b>Output:</b> data/10.3897/phytokeys.22.4041.txt"]
-        doi2xml-->xmlproc
+        subgraph " "
+            xmlproc["<b>make txt</b> For each XML file, <br/>extract relevant data and <br/>write to text delimited file<br/><b>Input:</b> downloads/10.3897/phytokeys.22.4041.xml<br/><b>Output:</b> data/10.3897/phytokeys.22.4041.txt"]
+            doi2xml--"Initial text processing and image download"-->xmlproc
         end
-    end
 
-    subgraph "Caption text processing and image segmentation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-        subgraph subgraph_padding_3 [ ]
-        style subgraph_padding_3 stroke-dasharray: 0 1
-        txtproc["<b>make captions</b> For each txt file, <br/>parse caption into components and <br/>write to text delimited file<br/><b>Input:</b> data/10.3897/phytokeys.22.4041.txt<br/><b>Output:</b> data/10.3897/phytokeys.22.4041-captions.txt"]
-        seg["<b>make segment</b> For each caption set,<br/>read illustration image and segment"]
-        xmlproc-->txtproc-->seg
+        subgraph "" 
+            txtproc["<b>make captions</b> For each txt file, <br/>parse caption into components and <br/>write to text delimited file<br/><b>Input:</b> data/10.3897/phytokeys.22.4041.txt<br/><b>Output:</b> data/10.3897/phytokeys.22.4041-captions.txt"]
+            seg["<b>make segment</b> For each caption set,<br/>read illustration image and segment"]
+            xmlproc--"Caption text processing and image segmentation"-->txtproc-->seg
         end
     end
 ```
