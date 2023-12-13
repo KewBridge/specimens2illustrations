@@ -19,11 +19,12 @@ downloads/%.xml: doi2xml.py
 
 # This is our "ultimate" target, the processed text files
 all: ${txt_targets}
-img:  ${img_targets}
+xml: ${xml_targets}
+txt: ${txt_targets}
 
 echo:
+	echo ${xml_targets}
 	echo ${txt_targets}
-	echo ${img_targets}
 
 # Each .txt target depends on the script used to process the XML data (xml2illustrationdata.py) and the corresponding XML format data download
 # The mkdir cmd creates the directory in which we will store output, if necessary. Here we use the dir function in make to extract the directory name from the filename of the target ($@)
