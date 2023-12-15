@@ -9,6 +9,7 @@ data_prefix = data/
 xml_targets = $(addsuffix .xml, $(addprefix ${download_prefix}, ${dois}))
 # Similar to above, loop over each DOI in the list, add a prefix which is the path of the data directory, and a suffix which is the file extension ".txt"
 txt_targets = $(addsuffix /species-descriptions.txt, $(addprefix ${data_prefix}, ${dois}))
+cap_targets = $(addsuffix /captions.txt, $(addprefix ${data_prefix}, ${dois}))
 
 # Each .xml target depends only on the script used to download the XML data using the DOI (doi2xml.py). 
 # The mkdir cmd creates the directory in which we will store output, if necessary. Here we use the dir function in make to extract the directory name from the filename of the target ($@)
@@ -18,20 +19,30 @@ downloads/%.xml: doi2xml.py
 	python $^ $* $@
 
 # This is our "ultimate" target, the processed text files
-all: ${txt_targets}
+all: ${cap_targets}
 xml: ${xml_targets}
 txt: ${txt_targets}
+cap: ${cap_targets}
 
 echo:
 	echo ${xml_targets}
 	echo ${txt_targets}
 
-# Each .txt target depends on the script used to process the XML data (xml2illustrationdata.py) and the corresponding XML format data download
+# Each species-descriptions.txt target depends on the script used to process the XML data (xml2illustrationdata.py) and the corresponding XML format data download
 # The mkdir cmd creates the directory in which we will store output, if necessary. Here we use the dir function in make to extract the directory name from the filename of the target ($@)
 # The python call accepts the dependencies of this target ($^) as the input and the target itself ($@) as the output
 data/%/species-descriptions.txt: xml2illustrationdata.py downloads/%.xml
 	mkdir -p $(dir $@)
 	python $^ --download_images --image_dir $(dir $@) $@
+
+# Each captions.txt target depends on the script used to extract the captions 
+# (illustrations2captionsandsegments.py) and the corresponding txt format 
+# datafile
+# The python call accepts the dependencies of this target ($^) as the input 
+# and the target itself ($@) as the output
+data/%/captions.txt: illustrations2captionsandsegments.py data/%/species-descriptions.txt
+	mkdir -p $(dir $@)
+	python $^ --segment_images $@
 
 zip: build/data.zip
 
