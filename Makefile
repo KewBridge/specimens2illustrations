@@ -10,6 +10,7 @@ xml_targets = $(addsuffix .xml, $(addprefix ${download_prefix}, ${dois}))
 # Similar to above, loop over each DOI in the list, add a prefix which is the path of the data directory, and a suffix which is the file extension ".txt"
 txt_targets = $(addsuffix /species-descriptions.txt, $(addprefix ${data_prefix}, ${dois}))
 cap_targets = $(addsuffix /captions.txt, $(addprefix ${data_prefix}, ${dois}))
+seg_targets = $(addsuffix /segments.txt, $(addprefix ${data_prefix}, ${dois}))
 
 # Each .xml target depends only on the script used to download the XML data using the DOI (doi2xml.py). 
 # The mkdir cmd creates the directory in which we will store output, if necessary. Here we use the dir function in make to extract the directory name from the filename of the target ($@)
@@ -23,6 +24,7 @@ all: ${cap_targets}
 xml: ${xml_targets}
 txt: ${txt_targets}
 cap: ${cap_targets}
+seg: ${seg_targets}
 
 echo:
 	echo ${xml_targets}
@@ -36,13 +38,21 @@ data/%/species-descriptions.txt: xml2illustrationdata.py downloads/%.xml
 	python $^ --download_images --image_dir $(dir $@) $@
 
 # Each captions.txt target depends on the script used to extract the captions 
-# (illustrations2captionsandsegments.py) and the corresponding txt format 
+# (illustrations2captions.py) and the corresponding txt format 
 # datafile
 # The python call accepts the dependencies of this target ($^) as the input 
 # and the target itself ($@) as the output
-data/%/captions.txt: illustrations2captionsandsegments.py data/%/species-descriptions.txt
+data/%/captions.txt: illustrations2captions.py data/%/species-descriptions.txt
 	mkdir -p $(dir $@)
-	python $^ --segment_images $@
+	python $^ $@
+
+# Each segments.txt target depends on the processing script (segmentimages.py)
+# and its input datafiles (species-descriptions.txt and captions.txt)
+# The python call accepts the dependencies of this target ($^) as the input 
+# and the target itself ($@) as the output
+data/%/segments.txt: segmentimages.py data/%/species-descriptions.txt data/%/captions.txt
+	mkdir -p $(dir $@)
+	python $^ $@
 
 zip: build/data.zip
 
