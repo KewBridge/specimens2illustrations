@@ -71,7 +71,7 @@ def getLoopBoldCount(figure) -> int:
     
     return customLoopCount('A', [bold.text for bold in bolds])
 
-def getSegmentedText(figure) -> (dict, list):
+def getSegmentedText(figure, taxon_name: str) -> (dict, list):
     '''
     Returns a dictionary/map of [BOLD_LETTER] -> [Attributes]
     if there are no BOLD_LETTERS, returns dictionary of 
@@ -107,7 +107,7 @@ def getSegmentedText(figure) -> (dict, list):
     for line in figure.p.strings:
         
         # Error in xml
-        if line in getTaxonName(figure):
+        if line in taxon_name:
             # print(line)
             continue
         
@@ -180,13 +180,13 @@ def getSegmentedText(figure) -> (dict, list):
         generalTexts.append(current_text)
     return standartdizeFigureInfo(bolds, texts), generalTexts
 
-def getTextFromNoBold(figure) -> list:
+def getTextFromNoBold(figure, taxon_name: str) -> list:
     '''Returns the data if figure is not segmented into multiple parts'''
     # No first letter to ignore capitilaziton
     if 'erbarium specimen' in figure.p.text:
         result = []
         for text in splitIgnoreCapital(figure.p.text, '. '):
-            if getTaxonName(figure) in text and '–' not in text:
+            if taxon_name in text and '–' not in text:
                 continue
             
             if 'erbarium specimen' in text:
