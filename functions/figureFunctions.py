@@ -14,7 +14,7 @@ def figureSegmentation(figures: list) -> dict:
     new_dict = {}
     
     for figure in figures:
-        key = figure.parent.title.replace('.', '')
+        key = figure.parent.title.text.replace('.', '')
         
         get_title = new_dict.get(key, [])
         get_title.append(figure)
