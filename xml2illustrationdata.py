@@ -2,14 +2,11 @@ from bs4 import BeautifulSoup
 import requests
 import os
 import argparse
-import datetime
-import random
 
 import sys
-sys.path.append('sepcimens2illustrations/functions')
-from figureFunctions import getLabel, getUrl, figureSegmentation, standartizeFigureLabel
-from pandasFunctions import df2Excel
-
+sys.path.append('specimens2illustrations/functions')
+from figureFunctions import getLabel, getUrl, getTaxonName, getDescription, figureSegmentation, standartizeFigureLabel
+    
 def xml2illustrations(input_file, output_file, image_dir, download_images = True):
     xml_data = None
     with open(input_file, 'r', encoding = 'utf-8') as f_in:
@@ -20,22 +17,27 @@ def xml2illustrations(input_file, output_file, image_dir, download_images = True
             
             all_figures = soup.find_all('fig')
             
-            # Distribution Figures are always maps that 
-            # are ALWAYS unwanted in our algorithms
-            distribution_figures = [figure for figure in all_figures \
-                                    if figure.find_all(string=re.compile('distribution', re.IGNORECASE))]
-            
-            wanted_figures = [figure for figure in all_figures \
-                              if figure not in distribution_figures]
-            
-            search_table = figureSegmentation(wanted_figures)
+            search_table = figureSegmentation(all_figures)
             
             #Temporary as we are only working on 'Description' tagged figures for now
             key = 'Description'
             description_figures = search_table.get(key, [])
                         
             with open(output_file, 'w', encoding='utf8') as f_out:
+                
+                headers = ['Label', 'Taxon Name', 'Description', 'Url', 'Figure Object']
+                f_out.write('\t'.join(headers) + '\n')
+                
                 for i, figure in enumerate(description_figures):
+                    
+                    output_data = [getLabel(figure), \
+                                   getTaxonName(figure), \
+                                   getDescription(figure), \
+                                   getUrl(figure), \
+                                   str(figure).replace('\n', '')]
+                    
+                    output_data = ['' if i is None else i for i in output_data]
+                    f_out.write('\t'.join(output_data) + '\n')
                     
                     if download_images:
                         
@@ -52,11 +54,8 @@ def xml2illustrations(input_file, output_file, image_dir, download_images = True
                             
                             downloadImage(fig_url, save_path)
             f_out.close()
-            
-            excel_name = 'plant-data.xlsx'
-            # Write plant data into output_file
-            df2Excel(search_table.get('Descripiton', []), output_file, excel_name)
-            
+
+        
 # TODO: Use the requests library to download the image specified in fig_url and store the downloaded file in image_dir
 
 def downloadImage(url, destinationDir):  
@@ -65,7 +64,7 @@ def downloadImage(url, destinationDir):
     with open(destinationDir, 'wb') as img_f:
         img_f.write(r.content)
         #print(img_f)
-        
+
 if __name__ == "__main__":
     
     # Create an ArgumentParser object
