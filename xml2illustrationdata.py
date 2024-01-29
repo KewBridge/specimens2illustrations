@@ -42,7 +42,7 @@ def xml2illustrations(input_file, output_file, image_dir, download_images = True
                         
                         if fig_url is not None:
                             
-                            figure_label = ''.join(filter(str.isdigit(getLabel(figure))))
+                            figure_label = ''.join(filter(str.isdigit, getLabel(figure)))
                             figure_label = standartizeFigureLabel(figure_label)
                             
                             image_file = f'{key}{i}_{figure_label}.jpg'
