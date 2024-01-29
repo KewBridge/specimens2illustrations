@@ -30,11 +30,7 @@ def xml2illustrations(input_file, output_file, image_dir, download_images = True
                 
                 for i, figure in enumerate(description_figures):
                     
-                    output_data = [getLabel(figure), \
-                                   getTaxonName(figure), \
-                                   getDescription(figure), \
-                                   getUrl(figure), \
-                                   str(figure).replace('\n', '')]
+                    output_data = [getLabel(figure), getTaxonName(figure), getDescription(figure), getUrl(figure), str(figure).replace('\n', '')]
                     
                     output_data = ['' if i is None else i for i in output_data]
                     f_out.write('\t'.join(output_data) + '\n')
