@@ -7,7 +7,7 @@ import os
 # functions_path = 'C:/Users/eka10kg/OneDrive - The Royal Botanic Gardens, Kew/functions'
 # if functions_path not in sys.path:
 #     sys.path.append(functions_path)
-import figureFunctions
+import functions.figureFunctions
 
 GLOBAL_COLUMNS = ['Description', 'Collection', 'Height', 'Photo Credits'] # Photo Source Individual olabilir Article 6
 # helper function cleantextden parantezleri cikar article 6 ya bak
