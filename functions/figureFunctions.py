@@ -83,7 +83,7 @@ def getSegmentedText(figure, taxon_name: str) -> (dict, list):
     
     bolds = [bold.text for bold in figure.find_all('bold')]
     if len(bolds) < 1:
-        no_bold_list = getTextFromNoBold(figure)
+        no_bold_list = getTextFromNoBold(figure, taxon_name)
         if len(no_bold_list) == 1:
             end_line = getEndLineCondition(figure)
             return {'ALL': [no_bold_list[0]]}, [figure.p.text.split(end_line, 1)[-1]]
