@@ -304,14 +304,17 @@ def standartizeFigureLabel(label:str) -> str:
     into texts of the same size by adding zeros
     to the front of the <Num>.
     
-    Ex: Figure 8 -> Figure 008
-        Figure 10 -> Figure 010
-        Figure 102 -> Figure 102
+    Ex: Figure 8 -> Figure008
+        Figure 10 -> Figure010
+        Figure 102 -> Figure102
     
     This allows lower figure labels to be 
     smaller than higher figure numbers in
     lexograpich order.
     '''
+    if ' ' not in label:
+        return label
+        
     top, bottom = label.split(' ', 1)  
     
     bottom = '0' * (3 - len(bottom)) + bottom
