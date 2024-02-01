@@ -5,7 +5,7 @@ import argparse
 
 import sys
 sys.path.append('./functions/figureFunctions')
-from functions.figureFunctions import getLabel, getUrl, getTaxonName, getDescription, figureSegmentation, standartizeFigureLabel
+from functions.figureFunctions import getLabel, getUrl, getTaxonName, getDescription, figureSegmentation
     
 def xml2illustrations(input_file, output_file, image_dir, download_images = True):
     xml_data = None
@@ -43,9 +43,9 @@ def xml2illustrations(input_file, output_file, image_dir, download_images = True
                         if fig_url is not None:
                             
                             figure_label = ''.join(filter(str.isdigit, getLabel(figure)))
-                            figure_label = standartizeFigureLabel(figure_label)
+                            figure_label = '0' * (3 - len(figure_label)) + figure_label  
                             
-                            image_file = f'{key}{i}_{figure_label}.jpg'
+                            image_file = f'{key}_{figure_label}.jpg'
                             save_path = os.path.join(image_dir, image_file)
                             
                             downloadImage(fig_url, save_path)
