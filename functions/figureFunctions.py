@@ -4,7 +4,7 @@ import re
 # functions_path = 'C:/Users/eka10kg/OneDrive - The Royal Botanic Gardens, Kew/functions'
 # if functions_path not in sys.path:
 #     sys.path.append(functions_path)
-from helperFunctions import customLetterCount, customLoopCount, standartdizeFigureInfo
+from functions.helperFunctions import customLetterCount, customLoopCount, standartdizeFigureInfo
 
 def figureSegmentation(figures: list) -> dict:
     '''
