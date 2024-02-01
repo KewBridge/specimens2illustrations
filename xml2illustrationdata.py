@@ -4,7 +4,7 @@ import os
 import argparse
 
 import sys
-sys.path.append('specimens2illustrations/functions')
+sys.path.append('./functions/figureFunctions')
 from figureFunctions import getLabel, getUrl, getTaxonName, getDescription, figureSegmentation, standartizeFigureLabel
     
 def xml2illustrations(input_file, output_file, image_dir, download_images = True):
