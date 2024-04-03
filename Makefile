@@ -46,6 +46,13 @@ data/%/captions.txt: illustrations2captions.py data/%/species-descriptions.txt
 	mkdir -p $(dir $@)
 	python $^ $@
 
+# This DOI requires special processing when working on the captions
+# So this is a target which specifies the "--do_special_processing" flag 
+# to the illustrations2captions.py script  
+data/10.3897/phytokeys.198.79514/captions.txt: illustrations2captions.py data/${doi_for_special_processing}/species-descriptions.txt
+	mkdir -p $(dir $@)
+	python $^ --do_special_processing $@
+
 # Each segments.txt target depends on the processing script (segmentimages.py)
 # and its input datafiles (species-descriptions.txt and captions.txt)
 # The python call accepts the dependencies of this target ($^) as the input 
