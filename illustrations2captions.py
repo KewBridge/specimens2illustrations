@@ -11,7 +11,7 @@ if __name__ == "__main__":
     # Add the command-line arguments
     parser.add_argument("input_file", help="Path to the input txt file")
     parser.add_argument("output_file", help="Path to the output captions file")
-    parser.add_argument("--do_special_processing", default=False, action='store_true)
+    parser.add_argument("--do_special_processing", default=False, action='store_true')
     # Parse the command-line arguments
     args = parser.parse_args()
 
