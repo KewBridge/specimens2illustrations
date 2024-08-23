@@ -49,7 +49,7 @@ data/%/captions.txt: illustrations2captions.py data/%/species-descriptions.txt
 # This DOI requires special processing when working on the captions
 # So this is a target which specifies the "--do_special_processing" flag 
 # to the illustrations2captions.py script  
-data/10.3897/phytokeys.198.79514/captions.txt: illustrations2captions.py data/${doi_for_special_processing}/species-descriptions.txt
+data/10.3897/phytokeys.198.79514/captions.txt: illustrations2captions.py data/10.3897/phytokeys.198.79514/species-descriptions.txt
 	mkdir -p $(dir $@)
 	python $^ --do_special_processing $@
 
