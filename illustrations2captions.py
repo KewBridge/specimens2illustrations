@@ -6,7 +6,7 @@ import argparse
 
 import sys
 sys.path.append('./functions/pandasFunctions')
-from pandasFunctions import segmentOnRow
+from functions.pandasFunctions import segmentOnRow
 
 def main(inputfile, outputfile, do_special_processing = False):
     df = pd.read_csv(inputfile, delimiter = '\t', header = 0, encoding = 'utf-8')
