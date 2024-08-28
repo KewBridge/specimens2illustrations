@@ -20,10 +20,12 @@ def main(inputfile, outputfile, do_special_processing = False):
         data, multi_index = segmentOnRow(row, i, do_special_processing)
         
         all_data.append(data)
-        print(len(all_data), end = ' ')
         multi_indexes.append(multi_index)
 
-    print(len(all_data))
+    # Empty dataset no further action is needed
+    if len(all_data) == 0:
+        return
+        
     all_data = np.concatenate(all_data, axis=0)
     
     multi_indexes = np.concatenate(multi_indexes, axis=0)
