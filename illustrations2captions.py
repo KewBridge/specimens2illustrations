@@ -20,6 +20,7 @@ def main(inputfile, outputfile, do_special_processing = False):
         data, multi_index = segmentOnRow(row, i, do_special_processing)
         
         all_data.append(data)
+        print(len(all_data), end = ' ')
         multi_indexes.append(multi_index)
 
     print(len(all_data))
