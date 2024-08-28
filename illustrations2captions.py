@@ -5,7 +5,7 @@ import numpy as np
 import argparse
 
 def main(inputfile, outputfile, do_special_processing = False):
-    df = pd.read_csv(inputfile, delimiter = '\t', header = 0, encoding = 'cp1252')
+    df = pd.read_csv(inputfile, delimiter = '\t', header = 0, encoding = 'utf-8')
 
     multi_indexes = []
     all_data = []
@@ -31,7 +31,7 @@ def main(inputfile, outputfile, do_special_processing = False):
         
     count_per_row = new_df.groupby(level=0, sort=False).size().values
     
-    new_df.to_csv(outputfile, header=True, encoding='cp1252')
+    new_df.to_csv(outputfile, header=True, encoding='utf-8')
     
     print('Parsing captions in {} saving parsed caption data to {}'.format(inputfile, outputfile))
 
