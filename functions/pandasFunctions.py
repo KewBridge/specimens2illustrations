@@ -2,11 +2,8 @@ import numpy as np
 import pandas as pd
 import re
 import os
+from bs4 import BeautifulSoup
 
-# import sys
-# functions_path = 'C:/Users/eka10kg/OneDrive - The Royal Botanic Gardens, Kew/functions'
-# if functions_path not in sys.path:
-#     sys.path.append(functions_path)
 import functions.figureFunctions
 
 GLOBAL_COLUMNS = ['Description', 'Collection', 'Height', 'Photo Credits'] # Photo Source Individual olabilir Article 6
@@ -41,7 +38,7 @@ def text2Index(text: str) -> int:
     return 1 # Index of Collection
 
 # TODO: Do not forget to make sure article_6 are passed correctly
-def figureInfo2NumpyArray(figure_info: dict[str, list], photo_source: list, general_data: list, article_id: int = 0):
+def figureInfo2NumpyArray(figure_info: dict[str, list], photo_source: list, general_data: list, do_special_processing: bool = False):
     '''
     Returns general_data, figure_info, photo_source as a single numpy inorder array of shape
     (len(figure_info), 8) to be used as data in upcoming dataFrames 
@@ -49,7 +46,7 @@ def figureInfo2NumpyArray(figure_info: dict[str, list], photo_source: list, gene
     length = 4 # Specific Data Column Count
     result_array = np.zeros((len(figure_info), length), dtype='<U511')
     
-    if article_id == 6:
+    if do_special_processing:
         figure_info = fixArticle6(figure_info, photo_source)
     
     # Both for non-standart article format that causes overwrites
@@ -68,7 +65,7 @@ def figureInfo2NumpyArray(figure_info: dict[str, list], photo_source: list, gene
         general_datas.append(general_data)    
         
         # Only for Atricle 6 where photo_source is independent
-        if article_id == 6 and not photo_source:
+        if do_special_processing and not photo_source:
             result_array[i] = [attributes[0], # Description
                                attributes[1], # Collection
                                '',            # Article 6 does not have height data
@@ -191,7 +188,31 @@ def fixArticle6(_figure_info: dict[str, list], photo_source: list) -> dict[str, 
         figure_info[key] = val
     
     return figure_info
-        
+
+def segmentOnRow(row, idx, do_special_processing: bool) -> (np.ndarray, list[tuple]):
+    '''
+    Gets row of general data and caption text as input
+    and returns the general data and segmented caption text
+    correct order. Does special processing if flagged.
+    '''
+    # Columns are Label, Taxon Name, Description, Url, Figure Object
+    figure_text = row['Figure Object']
+    figure = BeautifulSoup(figure_text, 'xml')
+    
+    taxon_name = row['Taxon Name']
+    
+    figure_dict, photo_source = figureFunctions.getSegmentedText(figure, taxon_name)
+    general_data = [row.Label, \
+                    taxon_name, \
+                    row.Description, \
+                    figureFunctions.getCaptionText(figure), \
+                    row.Url]
+    
+    specific_arr = figureInfo2NumpyArray(figure_dict, photo_source, general_data, do_special_processing = do_special_processing)
+    
+    multi_index = figureInfo2MultiIndex(figure_dict, idx+1)
+    
+    return specific_arr, multi_index    
     
 def figures2DataFrame(figures: list):
     '''
