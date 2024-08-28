@@ -4,6 +4,10 @@ import numpy as np
 
 import argparse
 
+import sys
+sys.path.append('./functions/pandasFunctions')
+from pandasFunctions import segmentOnRow
+
 def main(inputfile, outputfile, do_special_processing = False):
     df = pd.read_csv(inputfile, delimiter = '\t', header = 0, encoding = 'utf-8')
 
