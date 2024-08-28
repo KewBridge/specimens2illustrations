@@ -4,7 +4,7 @@ import re
 import os
 from bs4 import BeautifulSoup
 
-import functions.figureFunctions
+import functions.figureFunctions as figureFunctions
 
 GLOBAL_COLUMNS = ['Description', 'Collection', 'Height', 'Photo Credits'] # Photo Source Individual olabilir Article 6
 # helper function cleantextden parantezleri cikar article 6 ya bak
