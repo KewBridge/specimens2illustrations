@@ -18,11 +18,12 @@ def main(inputfile, outputfile, do_special_processing = False):
         row = df.iloc[i]
         
         data, multi_index = segmentOnRow(row, i, do_special_processing)
-        print(data)
+        
         all_data.append(data)
         multi_indexes.append(multi_index)
-    
-    all_data = np.concatenate((all_data), axis=0)
+
+    print(len(all_data))
+    all_data = np.concatenate(all_data, axis=0)
     
     multi_indexes = np.concatenate(multi_indexes, axis=0)
 
