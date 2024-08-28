@@ -23,7 +23,7 @@ def xml2illustrations(input_file, output_file, image_dir, download_images = True
             key = 'Description'
             description_figures = search_table.get(key, [])
                         
-            with open(output_file, 'w', encoding='utf8') as f_out:
+            with open(output_file, 'w', encoding='utf-8') as f_out:
                 
                 headers = ['Label', 'Taxon Name', 'Description', 'Url', 'Figure Object']
                 f_out.write('\t'.join(headers) + '\n')
