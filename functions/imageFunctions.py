@@ -37,7 +37,7 @@ def extractAllImages(path):
             
     return images, image_names
         
-def colorOrgray(image) -> bool:
+def isGrayImage(image) -> bool:
     '''
     Given a BGR image (3 channels) split into 3
     channels and check whether they are the same.
