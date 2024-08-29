@@ -3,14 +3,10 @@
 import cv2
 import numpy as np
 import re 
-
 import sys
-FUNCTIONS_PATH = 'C:/Users/eka10kg/OneDrive - The Royal Botanic Gardens, Kew/functions'
-if FUNCTIONS_PATH not in sys.path:
-    sys.path.append(FUNCTIONS_PATH)
     
-from boundingBoxFunctions import mergeBoxes, clearAroundBoundingBox, getAreaofBox
-from imageFunctions import getVerticalLines, clearAroundLines, removePointNoise
+from functions.boundingBoxFunctions import mergeBoxes, clearAroundBoundingBox, getAreaofBox
+from functions.imageFunctions import getVerticalLines, clearAroundLines, removePointNoise
    
 def filterPredictions(predictions, labels, test:bool=False, weight:int=10) -> list[tuple]:
     '''Filter all predictions that are not in labels.'''
