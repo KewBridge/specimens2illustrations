@@ -4,8 +4,8 @@ import pandas as pd
 import os
 import cv2
 
-from imageFunctions import extractAllImages, isGrayImage
-from segmentationFunctions import segmentColorImage, segmentGrayImage
+from functions.imageFunctions import extractAllImages, isGrayImage
+from functions.segmentationFunctions import segmentColorImage, segmentGrayImage
 
 def main(inputfile_species, inputfile_captions, outputfile):
     
