@@ -3,20 +3,8 @@ import cv2
 import imageio
 import os
 
-import sys
-functions_path = 'C:/Users/eka10kg/OneDrive - The Royal Botanic Gardens, Kew/functions'
-if functions_path not in sys.path:
-    sys.path.append(functions_path)
-
-from boundingBoxFunctions import boundingBoxSegments, findHorizontalSimilarBBoxes
-from imageFunctions import addBorders, undoBorders, showImage
-from image2textFunctions import (contours2Label, getHeightandVerticalLine,reFilterPredictions, getSegmentPairbyDottedLine, getDottedLinesasContour, filterPredictions)
-
-input_path = "C:/workspace/specimens2illustrations/data/10.3897/phytokeys.22.4041/"
-output_path = "C:/workspace/specimens2illustrations/data/10.3897/phytokeys.22.4041/Segmentations/"
-
-# Returns all image files from a directory
-
+from functions.imageFunctions import addBorders, undoBorders, showImage
+from functions.image2textFunctions import (contours2Label, getHeightandVerticalLine,reFilterPredictions, getSegmentPairbyDottedLine, getDottedLinesasContour, filterPredictions)
 
 # FInd the biggest segment of the image --helper
 def findBiggestSegment(input_image):
@@ -309,58 +297,3 @@ def highlightMissing(original_image, segments, alpha=0.3):
         missing_segments = cv2.bitwise_or(missing_segments, no_segment)
     
     return highlightSegments(original_image, missing_segments, alpha)
-
-def getSegments(image, merge=True, epsilons = (5, 100, 0.75)):
-    '''
-    Draws the bounding boxes of image and merges based on bool(merge)
-    with epsilons as merging parameters
-    '''
-    segments = image2Segments(image)
-    
-    rects, colors = boundingBoxSegments(segments)
-    
-    if merge:
-        _angle, _distance, _area = epsilons
-        rects, segments = findHorizontalSimilarBBoxes(rects, segments,
-                                            epsilon_angle=_angle,
-                                            epsilon_distance=_distance,
-                                            epsilon_area=_area)
-    
-    return segments, rects, colors[:len(rects)]
-    # copy = np.copy(image)
-    
-# def segments2Label(segments, predictions):
-#     for segment in segments:
-#         gray_segment = cv2.cvtColor(segment, cv2.COLOR_BGR2GRAY)
-        
-#         _, binary_segment = cv2.threshold(gray_segment, 250, 255, cv2.THRESH_BINARY_INV)
-        
-#         contours, _ = 
-    
-if __name__ == "__main__":
-    pass
-    # images, image_names = extractAllImages(input_path)
-    
-    # for image, image_name in zip(images, image_names):
-                
-    #     segmented_images = image2Segments(image)
-        
-    #     # Reduced '.png' and 'image_'
-    #     image_name = image_name.split('_', 1)[-1][:-4]
-        
-    #     highlighted_segments = []
-    #     for segment in segmented_images:
-    #         newSegment = highlightSegments(image, segment)
-    #         highlighted_segments.append(newSegment)
-        
-    #     missingImage = highlightMissing(image, segmented_images)
-    #     for i in range(3):
-    #         highlighted_segments.append(missingImage)
-        
-    #     # Used for visualization
-    #     segments2gif(highlighted_segments, image_name, output_path)
-        
-    #     # Used for creaating seperate segment images
-    #     # for idx, segmentedImage in enumerate(segmented_images, 1):
-    #     #     writeImage(f"{output_path}{image_name}_{idx}", segmentedImage)
-            
