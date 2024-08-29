@@ -20,7 +20,7 @@ def showImage(img, name='Image'):
 
 def extractAllImages(path):
     '''
-    Return all images from giveen path
+    Return all images from given path
     returns list of images and a list of their names
     '''
     images = []
