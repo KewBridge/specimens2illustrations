@@ -29,7 +29,11 @@ def xml2illustrations(input_file, output_file, image_dir, download_images = True
                 f_out.write('\t'.join(headers) + '\n')
                 
                 for i, figure in enumerate(description_figures):
-                    
+
+                    # Eliminate incorrect tagging in articles
+                    if 'Distribution of' in figure.text:
+                        continue
+                        
                     output_data = [getLabel(figure), getTaxonName(figure), getDescription(figure), getUrl(figure), str(figure).replace('\n', '')]
                     
                     output_data = ['' if i is None else i for i in output_data]
