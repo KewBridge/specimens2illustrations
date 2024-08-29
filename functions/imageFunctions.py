@@ -1,12 +1,7 @@
 import numpy as np
 import cv2
 import os
-
 import sys
-functions_path = 'C:/Users/eka10kg/OneDrive - The Royal Botanic Gardens, Kew/functions'
-if functions_path not in sys.path:
-    sys.path.append(functions_path)
-    
 
 def generateLabels(n:int):
     return [chr(ord('a') + i) for i in range(n)]
