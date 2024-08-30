@@ -1,5 +1,5 @@
 # Define a list of the DOIs (resolvable article identifiers) that we want to use as input):
-dois = 10.3897/phytokeys.22.4041 
+dois = 10.3897/phytokeys.22.4041 10.3897/phytokeys.66.8457 10.3897/phytokeys.84.12695 10.3897/phytokeys.106.21991 10.3897/phytokeys.123.31738 10.3897/phytokeys.198.79514 10.3897/phytokeys.209.87681
 # Define prefixes to contruct file paths in the download and data directories
 download_prefix = downloads/
 data_prefix = data/
