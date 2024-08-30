@@ -10,12 +10,12 @@ from functions.segmentationFunctions import segmentColorImage, segmentGrayImage
 def main(inputfile_species, inputfile_captions, outputfile):
     
     df = pd.read_csv(inputfile_captions, header=0, index_col=[0,1], encoding='utf-8')
-    
     count_per_row = df.groupby(level = 0, axis = 0).size().values
     
     pipeline = keras_ocr.pipeline.Pipeline()
-    
-    for correct_count, (image, image_name) in zip(count_per_row, extractAllImages(inputfile_species)):
+
+    species_path = os.path.dirname(inputfile_species)
+    for correct_count, (image, image_name) in zip(count_per_row, extractAllImages(species_path)):
         
         # If correct_count is 1, then no segmentation is needed
         if correct_count == 1:
