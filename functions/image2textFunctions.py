@@ -25,7 +25,6 @@ def filterPredictions(predictions, labels, test:bool=False, weight:int=10) -> li
         elif prediction[0][0] in labels and prediction[0][1] != 'm' and prediction[0][0] not in found_labels:
             #If label is 'es' instead of 'e' search for its existence in found_labels
             # if not found change it to the single letter. So 'es' -> 'e'
-            prediction[0] = prediction[0][0]
             found_labels.append(prediction[0])
             pass
         else:
