@@ -156,7 +156,12 @@ def contours2Label(contours, predictions, labels, dotted_line_pairs = []):
         # Skip to next iteration if contour is already classified
         if is_contour_added[i]:
             continue
-        
+
+        # Temporary for testing
+        if idx >= len(labels):
+            print(labels, min_distances, contours)
+            assert False, 'Debug break'
+            
         label = labels[idx]
         
         cnts = label_contour_map.get(label, [])
