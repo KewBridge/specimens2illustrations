@@ -143,6 +143,8 @@ def contours2Label(contours, predictions, labels, dotted_line_pairs = []):
     by dotted_lines
     '''
     label_predictions = filterPredictions(predictions, labels)
+    label_predictions = [prediction for prediction in label_predictions if len(prediction[0] == 1]
+    
     distance_array = getDistanceArrays(contours, label_predictions)
     min_distances = np.argmin(distance_array, axis=0)
     
