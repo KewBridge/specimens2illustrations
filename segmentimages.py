@@ -10,15 +10,28 @@ from functions.segmentationFunctions import segmentColorImage, segmentGrayImage
 def main(inputfile_species, inputfile_captions, outputfile):
     
     df = pd.read_csv(inputfile_captions, header=0, index_col=[0,1], encoding='utf-8')
+    
     count_per_row = df.groupby(level = 0, axis = 0).size().values
     
     pipeline = keras_ocr.pipeline.Pipeline()
-
+    
+    single_segment_image_names = []
+    
     species_path = os.path.dirname(inputfile_species)
-    for correct_count, (image, image_name) in zip(count_per_row, extractAllImages(species_path)):
+    images, image_names = extractAllImages(species_path)
+    
+    # Temporary for testing
+    max_length = min(len(images), len(count_per_row))
+    
+    for i in range(max_length):
+        
+        correct_count = count_per_row[i]
+        image = images[i]
+        image_name = image_names[i]
         
         # If correct_count is 1, then no segmentation is needed
         if correct_count == 1:
+            single_segment_image_names.append(image_name)
             continue
                     
         labels = [chr(97 + i ) for i in range(correct_count)]
@@ -28,7 +41,6 @@ def main(inputfile_species, inputfile_captions, outputfile):
             prediction = pipeline.recognize([image])
             
             segments = segmentGrayImage(image, prediction, labels)
-            
         else:
             
             segments = segmentColorImage(image)
@@ -42,6 +54,10 @@ def main(inputfile_species, inputfile_captions, outputfile):
             save_path = os.path.join(outputfile, segment_name)
             
             cv2.imwrite(save_path, segment)
+        
+        # If image has intersection, record them to another file
+        for name in single_segment_image_names:
+            pass
             
     print('''Segmenting images specified in {}, using caption 
           data from {} writing segment metadata to {}'''
