@@ -57,7 +57,7 @@ data/10.3897/phytokeys.198.79514/captions.txt: illustrations2captions.py data/10
 # and its input datafiles (species-descriptions.txt and captions.txt)
 # The python call accepts the dependencies of this target ($^) as the input 
 # and the target itself ($@) as the output
-data/%/segments.txt: segmentimages.py data/%/ data/%/captions.txt
+data/%/segments.txt: segmentimages.py data/%/species-descriptions.txt data/%/captions.txt
 	mkdir -p $(dir $@)
 	python $^ $@
 
