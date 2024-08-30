@@ -158,7 +158,9 @@ def contours2Label(contours, predictions, labels, dotted_line_pairs = []):
             continue
 
         # Temporary for testing
-        idx = min(len(labels) - 1, idx)
+        if len(labels) <= idx:
+            print(labels, label_predictions)
+            assert False, 'Debug break'
             
         label = labels[idx]
         
