@@ -44,6 +44,10 @@ def findBiggestSegment(input_image):
 
 # Segments the image and returns all segmented parts
 def segmentColorImage(_image, padding: int = 50, min_area_ratio: float = 0.05):
+    '''
+    Segments color image into its parts.
+    Labels them accordingly.
+    '''
     if padding:
         image = addBorders(_image, padding)
     else:
@@ -75,10 +79,14 @@ def segmentColorImage(_image, padding: int = 50, min_area_ratio: float = 0.05):
         if padding:
             segment = undoBorders(segment, padding)
 
-        no_label_segments.append((segment, (x,y)))
+            # Undo padding for (x,y) as well - (x,y) is the top left corner so subtraction is sufficient
+            x -= padding
+            y -= padding
         
-    
-    key = lambda n: n[1][0] * w + n[1][1]
+        no_label_segments.append((segment, (x,y)))
+
+    # Sort labels based on their top left corner with y having priority over x. This is aways the pattern colored segments are labeled
+    key = lambda n: n[1][0] + w * n[1][1]
     no_label_segments = sorted(no_label_segments, key=key)
     
     segments = {}
