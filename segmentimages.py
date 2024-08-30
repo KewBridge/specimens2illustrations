@@ -58,6 +58,7 @@ def main(inputfile_species, inputfile_captions, outputfile):
         
         # If image has intersection, record them to another file
         for name in single_segment_image_names:
+            # TODO: After figuring out how to record images to data.zip, write intersection images to another file.
             pass
             
     print('''Segmenting images specified in {}, using caption 
