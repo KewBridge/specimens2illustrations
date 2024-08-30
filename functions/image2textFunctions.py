@@ -28,10 +28,13 @@ def filterPredictions(predictions, labels, test:bool=False, weight:int=10) -> li
             prediction[0] = prediction[0][0]
             found_labels.append(prediction[0])
             pass
-       else:
+        else:
             continue
+
+        # Labels are always single letter. Ex 'es' -> 'e'
+        label = prediction[0][0]
+        _box = prediction[1]
         
-        label, _box = prediction
         box = np.copy(_box)
         
         max_xs = np.sort(box[:, 0])[2:]
