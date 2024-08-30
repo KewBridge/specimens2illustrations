@@ -11,15 +11,24 @@ from functions.imageFunctions import getVerticalLines, clearAroundLines, removeP
 def filterPredictions(predictions, labels, test:bool=False, weight:int=10) -> list[tuple]:
     '''Filter all predictions that are not in labels.'''
     filtered_predictions = []
-    for prediction in predictions[0]:
+
+    found_labels = []
+    
+    sort_key = lambda p: len(p[0])
+    for prediction in sorted(predictions[0], key=sort_key):
         
         if prediction[0] in labels and len(prediction[0]) == 1:
+            found_labels.append(prediction[0])
             pass
         # Condition for detecting 'es' or other real label bounding boxes
         # that are misidentified by the keras_ocr pipeline
-        elif prediction[0][0] in labels and prediction[0][1] != 'm':
+        elif prediction[0][0] in labels and prediction[0][1] != 'm' and prediction[0][0] not in found_labels:
+            #If label is 'es' instead of 'e' search for its existence in found_labels
+            # if not found change it to the single letter. So 'es' -> 'e'
+            prediction[0] = prediction[0][0]
+            found_labels.append(prediction[0])
             pass
-        else:
+       else:
             continue
         
         label, _box = prediction
