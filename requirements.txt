@@ -1,6 +1,7 @@
 beautifulsoup4
 opencv-python
 imageio
+tensorflow==2.15
 keras-ocr
 lxml
 numpy
