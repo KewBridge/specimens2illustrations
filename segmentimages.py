@@ -21,6 +21,7 @@ def main(inputfile_species, inputfile_captions, outputfile):
     images, image_names = extractAllImages(species_path)
     
     # Temporary for testing
+    print(count_per_row)
     max_length = min(len(images), len(count_per_row))
     
     for i in range(max_length):
