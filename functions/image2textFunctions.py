@@ -17,12 +17,16 @@ def filterPredictions(predictions, labels, test:bool=False, weight:int=10) -> li
     sort_key = lambda p: len(p[0])
     for prediction in sorted(predictions[0], key=sort_key):
         
+        # Duplicate labels due to failure of image-to-text algorithm is not allowed
+        if prediction[0][0] in found_labels:
+            continue
+        
         if prediction[0] in labels and len(prediction[0]) == 1:
             found_labels.append(prediction[0])
             pass
         # Condition for detecting 'es' or other real label bounding boxes
         # that are misidentified by the keras_ocr pipeline
-        elif prediction[0][0] in labels and prediction[0][1] != 'm' and prediction[0][0] not in found_labels:
+        elif prediction[0][0] in labels and prediction[0][1] != 'm':
             #If label is 'es' instead of 'e' search for its existence in found_labels
             # if not found change it to the single letter. So 'es' -> 'e'
             found_labels.append(prediction[0])
